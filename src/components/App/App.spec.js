@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
 import { shallow } from 'enzyme';
+import ScrollingText from '../ScrollingText/ScrollingText';
 
 describe('App', () => {
   let wrapper;
@@ -16,15 +16,22 @@ describe('App', () => {
   });
 
   it('should fetch films from api', async () => {
+    //mock fetch
+    //test fetch called with correct params
+    //test state was mutated
     expect(wrapper.state('films').length).toEqual(0)
     await wrapper.instance().getFilms();
-    expect(wrapper.state('films').length).not.toEqual(0)
+    expect(wrapper.state('films').length).toEqual(7)
   });
 
   it('should get random film scroll text,year, and title', () => {
-    
-  })
+    //Ask best way to test random number generator
+  });
 
+  it('should have 3 props of correct type', async () => {
+    await wrapper.instance().getFilms();
+    expect(wrapper.find(ScrollingText).prop('film')).toBeInstanceOf(Object);
+  });
 
 })
 
