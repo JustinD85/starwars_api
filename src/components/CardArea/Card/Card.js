@@ -1,5 +1,5 @@
 import React from 'react'
 
-export default () => {
-  return <div className="Card">Card</div>
+export default (props) => {
+  return <div className="Card">{props.name}</div>
 }

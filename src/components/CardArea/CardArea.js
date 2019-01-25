@@ -11,7 +11,8 @@ const CardArea = (props) => {
           <button className='next'>{'>'}</button>
 
           {props[currentFilter].map((j) => {
-            return <Card key={j.name} />
+            console.log(j)
+            return <Card key={j.name}{...j} />
           })}
         </Fragment>
       }

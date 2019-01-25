@@ -7,23 +7,37 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      films: [],
+      film: {},
       people: [],
       vehicles: [],
       planets: [],
-      randomFilmNumber: null,
       currentFilter: null
     }
   }
 
   getData = async (type, options = '') => {
-    if (!this.state[type]) return;
     const response = await fetch(`https://swapi.co/api/${type}${options}`);
-    const unfilteredResult = await response.json();
-    const data = unfilteredResult.results;
-    const currentFilter = type === 'films' ? null : type;
-    await this.setState({ [type]: [...data], currentFilter });
+    return await response.json();
+  }
 
+  setRandomFilm = async () => {
+    const unfilteredData = await this.getData('films');
+    const films = unfilteredData.results;
+    const { length } = films;
+    const index = Math.floor(Math.random() * length);;
+    this.setState({ film: { ...films[index] } });
+  }
+
+
+
+  getCardAreaData = async (type) => {
+    // const hasBeenCalledBefore = this.state.people.length;
+    // if (hasBeenCalledBefore) return
+    const unfilteredData = await this.getData(type)
+    console.log(unfilteredData)
+  }
+
+  getNewPageData = (type) => {
     // if (unfilteredResult.next) {
     //   const nextUrl = unfilteredResult.next;
     //   const index = nextUrl.search(/\?/);
@@ -34,24 +48,18 @@ class App extends Component {
   }
 
 
-  getRandomNumber() {
-    const { length } = this.state.films;
-    return Math.floor(Math.random() * length);
-  }
 
-  async componentDidMount() {
-    await this.getData('films')
-    this.setState((oldState => {
-      return { randomFilm: oldState.films[this.getRandomNumber()] }
-    }))
+
+  componentDidMount() {
+    this.setRandomFilm()
   }
 
   render() {
     const { people, vehicles, planets } = this.state;
     return (
       <div className="App">
-        <ScrollingText film={this.state.randomFilm} />
-        <FilterSection getData={this.getData} />
+        <ScrollingText film={this.state.film} />
+        <FilterSection getData={this.getCardAreaData} />
         <CardArea
           currentFilter={this.state.currentFilter}
           people={people}
