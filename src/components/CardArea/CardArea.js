@@ -3,15 +3,16 @@ import './CardArea.scss';
 import Card from './Card/Card'
 const CardArea = (props) => {
   const { currentFilter } = props;
+ 
   return (
     <section className='CardArea'>
-      {props.currentFilter &&
+      {props.currentFilter && props[currentFilter] &&
         <Fragment>
           <button className='previous'>{'<'}</button>
           <button className='next'>{'>'}</button>
 
           {props[currentFilter].map((j) => {
-            console.log(j)
+          
             return <Card key={j.name}{...j} />
           })}
         </Fragment>
