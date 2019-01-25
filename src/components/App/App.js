@@ -1,49 +1,63 @@
 import React, { Component } from 'react';
 import './App.scss';
-import ScrollingText from '../ScrollingText/ScrollingText'
-
+import ScrollingText from '../ScrollingText/ScrollingText';
+import FilterSection from '../FilterSection/FilterSection';
+import CardArea from '../CardArea/CardArea';
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      films: []
+      films: [],
+      people: [],
+      vehicles: [],
+      planets: [],
+      randomFilmNumber: null,
+      currentFilter: null
     }
   }
 
-  getFilms = async () => {
-    const response = await fetch('https://swapi.co/api/films/');
+  getData = async (type, options = '') => {
+    if (!this.state[type]) return;
+    const response = await fetch(`https://swapi.co/api/${type}${options}`);
     const unfilteredResult = await response.json();
-    const films = await unfilteredResult.results;
-    this.setState({ films });
+    const data = unfilteredResult.results;
+    const currentFilter = type === 'films' ? null : type;
+    await this.setState({ [type]: [...data], currentFilter });
+
+    // if (unfilteredResult.next) {
+    //   const nextUrl = unfilteredResult.next;
+    //   const index = nextUrl.search(/\?/);
+    //   const options = nextUrl.substring(index);
+    //   console.log(type, options);
+    //   this.getData(type, options);
+    // }
   }
 
-  getRandomScrollText() {
+
+  getRandomNumber() {
     const { length } = this.state.films;
-    const randomNumber = Math.floor(Math.random() * length);
-    return this.state.films[randomNumber]
+    return Math.floor(Math.random() * length);
   }
 
-  componentDidMount() {
-    this.getFilms();
-
+  async componentDidMount() {
+    await this.getData('films')
+    this.setState((oldState => {
+      return { randomFilm: oldState.films[this.getRandomNumber()] }
+    }))
   }
 
   render() {
+    const { people, vehicles, planets } = this.state;
     return (
       <div className="App">
-        <ScrollingText film={this.getRandomScrollText()} />
-        <section className="filter-buttons">
-          <button>People</button>
-          <button>Vehicle</button>
-          <button>Planet</button>
-        </section>
-        <section className="card-area">
-          <div>card</div>
-          <div>card</div>
-          <div>card</div>
-          <div>card</div>
-          <div>card</div>
-        </section>
+        <ScrollingText film={this.state.randomFilm} />
+        <FilterSection getData={this.getData} />
+        <CardArea
+          currentFilter={this.state.currentFilter}
+          people={people}
+          vehicles={vehicles}
+          planets={planets}
+        />
       </div>
     );
   }

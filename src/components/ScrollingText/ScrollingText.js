@@ -11,7 +11,7 @@ const ScrollingText = ({ film }) => {
         <p>{film.opening_crawl}</p>
       </div>
       :
-      <div>Loading</div>
+      <div className="loading">Loading</div>
   )
 }
 
@@ -19,4 +19,5 @@ export default ScrollingText;
 
 ScrollingText.propTypes = {
   film: PropTypes.object
+  //add prop key types
 }

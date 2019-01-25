@@ -1,0 +1,37 @@
+.FilterSection {
+  padding: 1%;
+  height: 30%;
+  width: 100%;
+  display: grid;
+  grid-template-areas:
+    ". people ."
+    " vehicle . planet"
+    " . favorite .";
+
+  button {
+    max-width: 300px;
+    margin: 1%;
+    border-radius: 25px;
+    background: grey;
+    color: gold;
+    border: none;
+    text-transform: capitalize;
+  }
+
+  .people {
+    grid-area: people;
+  }
+
+  .vehicle {
+    grid-area: vehicle;
+  }
+
+  .planet {
+    grid-area: planet;
+  }
+
+  .favorite {
+    grid-area: favorite;
+  }
+
+}

@@ -1,9 +1,9 @@
-.ScrollingText {
+.ScrollingText,
+.loading {
   height: 20%;
   text-align: center;
-  max-width: 30ch;
+  width: 30ch;
   line-height: 5ch;
   overflow: scroll;
-  background:goldenrod;
   font-size: 2rem;
 }

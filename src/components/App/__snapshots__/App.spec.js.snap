@@ -5,5 +5,7 @@ exports[`App renders without crashing 1`] = `
   className="App"
 >
   <ScrollingText />
+  <FilterSection />
+  <CardArea />
 </div>
 `;
