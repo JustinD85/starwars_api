@@ -8,6 +8,7 @@ class App extends Component {
     super();
     this.state = {
       film: {},
+      favorites:[],
       currentFilter: null,
     }
   }
