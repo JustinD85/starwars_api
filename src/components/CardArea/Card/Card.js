@@ -1,7 +1,10 @@
 import React from 'react'
 
 export default (props) => {
+  const { name,result} = props
+
   return <div className="Card">
-    {props.name}
-    {props.homeworld}</div>
+    {name}
+    {result}
+  </div>
 }
