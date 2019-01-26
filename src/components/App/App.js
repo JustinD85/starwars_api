@@ -28,6 +28,7 @@ class App extends Component {
     this.setState({ film: { ...films[index] } });
   }
 
+
   setCurrentFilter = (type) => {
     this.setState({
       currentFilter: type,
@@ -52,7 +53,10 @@ class App extends Component {
     return (
       <div className="App">
         <ScrollingText film={this.state.film} />
-        <FilterSection getData={this.setCurrentFilter} />
+        <FilterSection
+          setCurrentFilter={this.setCurrentFilter}
+          favoriteCount={this.state.favorites.length}
+        />
         <CardArea
           currentFilter={this.state.currentFilter}
           getData={this.getData}

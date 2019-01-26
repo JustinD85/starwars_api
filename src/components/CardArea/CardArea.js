@@ -9,7 +9,8 @@ class CardArea extends Component {
       vehicles: [],
       planets: [],
       species: [],
-      favorites: []
+      favorites: [],
+      isLoaded: false,
     }
   }
 
@@ -30,41 +31,47 @@ class CardArea extends Component {
     if (newData.next) {
       const index = newData.next.search(/\?/)
       const option = newData.next.substring(index);
-      this.setAllOfType(type, option)
+      await this.setAllOfType(type, option)
     }
   }
 
-  peopleCardSet = (currentElement) => {
-    const { name, population } = this.lookUp('planets', 'url', currentElement.homeworld)
-    let speciesName;
-    if (currentElement.species.length) {
-      speciesName = this.lookUp('species', 'url', currentElement.species[0]).name
-    } else {
-      speciesName = 'unknown'
+  setCard = (currentElement) => {
+    const { currentFilter } = this.props;
+
+    switch (currentFilter) {
+      case 'people': {
+        const { name, population } = this.lookUp('planets', 'url', currentElement.homeworld)
+        let speciesName;
+        if (currentElement.species.length) {
+          speciesName = this.lookUp('species', 'url', currentElement.species[0]).name
+        } else {
+          speciesName = 'unknown'
+        }
+        return [<div>{name}</div>, <div>{population}</div>, <div>{speciesName}</div>]
+      }
+      case 'planets': {
+        const { terrain, population, climate } = currentElement;
+        return [<div>{terrain}</div>, <div>{population}</div>, <div>{climate}</div>]
+      }
+      case 'vehicles': {
+        const { model, vehicle_class, passengers } = currentElement;
+        return [<div>{model}</div>, <div>{vehicle_class}</div>, <div>{passengers}</div>]
+      }
+      default: return 'unknown error'
     }
-    return [<div>{name}</div>, <div>{population}</div>, <div>{speciesName}</div>]
-  }
-
-  planets = (currentElement) => {
-    const { terrain, population, climate } = currentElement;
-    return [<div>{terrain}</div>, <div>{population}</div>, <div>{climate}</div>]
-  }
-
-  vehicles = (currentElement) => {
-    const { model, vehicle_class, passengers } = currentElement;
-    return [<div>{model}</div>, <div>{vehicle_class}</div>, <div>{passengers}</div>]
   }
 
   lookUp = (noun, aProperty, predicate) => {
     return this.state[noun].find((element) => element[aProperty] === predicate)
   }
 
-  setAllData = async () => {
-    ['planets', 'species', 'vehicles', 'people']
-      .forEach(noun => this.setAllOfType(noun))
+  setAllData = () => {
+    let a = ['planets', 'species', 'vehicles', 'people']
+      .map(noun => this.setAllOfType(noun))
+    Promise.all(a).then(() => this.setState({ isLoaded: true }))
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setAllData();
   }
 
@@ -84,11 +91,12 @@ class CardArea extends Component {
                 <Card
                   key={currentElement.name}
                   name={currentElement.name}
-                  result={this[currentFilter + 'CardSet'](currentElement)} />
+                  result={this.setCard(currentElement)} />
             })}
           </Fragment>
         }
-        {!this.props.currentFilter && <div>Pick something young Jedi</div>}
+        {!this.props.currentFilter && this.state.isLoaded && <div>Pick something young Jedi</div>}
+        {!this.state.isLoaded && <div>Loading!</div>}
       </section>)
   }
 }
