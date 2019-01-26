@@ -8,8 +8,10 @@ class App extends Component {
     super();
     this.state = {
       film: {},
-      favorites:[],
+      favorites: [],
       currentFilter: null,
+      min: 0,
+      max: 10,
     }
   }
 
@@ -28,8 +30,17 @@ class App extends Component {
 
   setCurrentFilter = (type) => {
     this.setState({
-      currentFilter: type
+      currentFilter: type,
+      min: 0,
+      max:10
     })
+  }
+
+  changeNumber = (change) => {
+    this.setState({
+      min: this.state.min + change,
+      max: this.state.max + change,
+    });
   }
 
   componentDidMount() {
@@ -45,6 +56,9 @@ class App extends Component {
         <CardArea
           currentFilter={this.state.currentFilter}
           getData={this.getData}
+          min={this.state.min}
+          max={this.state.max}
+          changeNumber={this.changeNumber}
         />
       </div>
     );
