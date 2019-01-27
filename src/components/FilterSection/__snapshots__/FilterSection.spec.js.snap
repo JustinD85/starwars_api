@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FilterSection/> to Match snapshot 1`] = `
+<section
+  className="FilterSection"
+>
+  <button
+    className="people"
+    onClick={[Function]}
+  >
+    people
+  </button>
+  <button
+    className="vehicle"
+    onClick={[Function]}
+  >
+    vehicles
+  </button>
+  <button
+    className="planet"
+    onClick={[Function]}
+  >
+    planets
+  </button>
+  <button
+    className="favorite"
+    onClick={[Function]}
+  >
+    Favorites: 
+    none
+  </button>
+</section>
+`;
