@@ -8,7 +8,7 @@ class App extends Component {
     super();
     this.state = {
       film: {},
-      favorites: [],
+      favorites: 0,
       currentFilter: null,
       min: 0,
       max: 10,
@@ -28,12 +28,22 @@ class App extends Component {
     this.setState({ film: { ...films[index] } });
   }
 
+  toggleFavorite = (url) => {
+    const { favorites } = this.state;
+    let favCopy = favorites.slice();
+    if (favCopy.includes(url)) {
+      favCopy.splice(favCopy.indexOf(url), 1);
+    } else {
+      favCopy.push(url)
+    }
+    this.setState({ favorites: favCopy })
+  }
 
   setCurrentFilter = (type) => {
     this.setState({
       currentFilter: type,
       min: 0,
-      max:10
+      max: 10
     })
   }
 
@@ -62,7 +72,9 @@ class App extends Component {
           getData={this.getData}
           min={this.state.min}
           max={this.state.max}
+          favorites={[...this.state.favorites]}
           changeNumber={this.changeNumber}
+          toggleFavorite={this.toggleFavorite}
         />
       </div>
     );
