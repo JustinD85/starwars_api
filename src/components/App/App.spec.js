@@ -1,7 +1,6 @@
 import React from 'react';
 import App from './App';
 import { shallow } from 'enzyme';
-import ScrollingText from '../ScrollingText/ScrollingText';
 
 describe('App', () => {
   let wrapper;
@@ -13,6 +12,8 @@ describe('App', () => {
   it('renders without crashing', () => {
     expect(wrapper).toMatchSnapshot();
   });
+
+  
 
   it('should fetch films from api', async () => {
     //mock fetch

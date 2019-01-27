@@ -41,15 +41,15 @@ class CardArea extends Component {
         } else {
           speciesName = 'unknown'
         }
-        return [<div>{name}</div>, <div>{population}</div>, <div>{speciesName}</div>]
+        return [<div>Planet: {name}</div>, <div>Pop: {population}</div>, <div>Species: {speciesName}</div>]
       }
       case 'planets': {
         const { terrain, population, climate } = currentElement;
-        return [<div>{terrain}</div>, <div>{population}</div>, <div>{climate}</div>]
+        return [<div>Terrain: {terrain}</div>, <div>Pop: {population}</div>, <div>Climate: {climate}</div>]
       }
       case 'vehicles': {
         const { model, vehicle_class, passengers } = currentElement;
-        return [<div>{model}</div>, <div>{vehicle_class}</div>, <div>{passengers}</div>]
+        return [<div>Model: {model}</div>, <div>Class: {vehicle_class}</div>, <div>Fits: {passengers}</div>]
       }
       case 'favorites': {
         return 'this.setCard(currentElement, currentElement.type)'

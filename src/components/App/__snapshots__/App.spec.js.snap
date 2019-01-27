@@ -4,8 +4,21 @@ exports[`App renders without crashing 1`] = `
 <div
   className="App"
 >
-  <ScrollingText />
-  <FilterSection />
-  <CardArea />
+  <ScrollingText
+    film={Object {}}
+  />
+  <FilterSection
+    favoriteCount={0}
+    setCurrentFilter={[Function]}
+  />
+  <CardArea
+    changeNumber={[Function]}
+    currentFilter={null}
+    favorites={Array []}
+    getData={[Function]}
+    max={10}
+    min={0}
+    toggleFavorite={[Function]}
+  />
 </div>
 `;

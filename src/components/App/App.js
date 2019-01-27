@@ -3,6 +3,7 @@ import './App.scss';
 import ScrollingText from '../ScrollingText/ScrollingText';
 import FilterSection from '../FilterSection/FilterSection';
 import CardArea from '../CardArea/CardArea';
+import API from '../../api/api';
 class App extends Component {
   constructor() {
     super();
@@ -15,13 +16,13 @@ class App extends Component {
     }
   }
 
-  getData = async (type, options = '') => {
-    const response = await fetch(`https://swapi.co/api/${type}${options}`);
-    return await response.json();
-  }
+  // getData = async (type, options = '') => {
+  //   const response = await fetch(`https://swapi.co/api/${type}${options}`);
+  //   return await response.json();
+  // }
 
   setRandomFilm = async () => {
-    const unfilteredData = await this.getData('films');
+    const unfilteredData = await API.getData('films');
     const films = unfilteredData.results;
     const { length } = films;
     const index = Math.floor(Math.random() * length);
@@ -67,7 +68,7 @@ class App extends Component {
         />
         <CardArea
           currentFilter={this.state.currentFilter}
-          getData={this.getData}
+          getData={API.getData}
           min={this.state.min}
           max={this.state.max}
           favorites={[...this.state.favorites]}

@@ -8,7 +8,7 @@ const FilterSection = (props) => {
       <button onClick={() => setCurrentFilter('people')} className="people">people</button>
       <button onClick={() => setCurrentFilter('vehicles')} className="vehicle">vehicles</button>
       <button onClick={() => setCurrentFilter('planets')} className="planet">planets</button>
-      <button onClick={() => setCurrentFilter('favorites')}className="favorite">Favorites: {favoriteCount}</button>
+      <button onClick={() => setCurrentFilter('favorites')}className="favorite">Favorites: {favoriteCount || 'none'}</button>
     </section>
   )
 }

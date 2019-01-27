@@ -1,9 +1,24 @@
-.ScrollingText,
-.loading {
+.ScrollingText {
   height: 20%;
   text-align: center;
   width: 30ch;
   line-height: 5ch;
-  overflow: scroll;
+  position: relative;
   font-size: 2rem;
+  overflow: hidden;
+  section{
+    animation: scroll infinite linear 30s;
+
+  }
+}
+
+
+@keyframes scroll {
+  0% {
+    transform: translateY(50%)
+  }
+
+  100% {
+    transform: translateY(-100%)
+  }
 }
