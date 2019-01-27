@@ -13,20 +13,22 @@ class App extends Component {
       currentFilter: null,
       min: 0,
       max: 10,
+      error:null
     }
   }
 
-  // getData = async (type, options = '') => {
-  //   const response = await fetch(`https://swapi.co/api/${type}${options}`);
-  //   return await response.json();
-  // }
-
   setRandomFilm = async () => {
-    const unfilteredData = await API.getData('films');
-    const films = unfilteredData.results;
-    const { length } = films;
-    const index = Math.floor(Math.random() * length);
-    this.setState({ film: { ...films[index] } });
+    try {
+      const unfilteredData = await API.getData('films');
+      const films = unfilteredData.results;
+      const { length } = films;
+      const index = Math.floor(Math.random() * length);
+      this.setState({ film: { ...films[index] } });
+    } catch (error) {
+      this.setState({
+        error: error.message,
+      })
+    }
   }
 
   toggleFavorite = (url) => {

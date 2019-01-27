@@ -26,5 +26,14 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "jest":{
+    "snapshotSerializers":[
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom":[
+      "src/components/*/*.js",
+      "src/api/*.js"
+    ]
+  }
 }
