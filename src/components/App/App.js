@@ -8,7 +8,7 @@ class App extends Component {
     super();
     this.state = {
       film: {},
-      favorites: 0,
+      favorites: [],
       currentFilter: null,
       min: 0,
       max: 10,
@@ -24,18 +24,16 @@ class App extends Component {
     const unfilteredData = await this.getData('films');
     const films = unfilteredData.results;
     const { length } = films;
-    const index = Math.floor(Math.random() * length);;
+    const index = Math.floor(Math.random() * length);
     this.setState({ film: { ...films[index] } });
   }
 
   toggleFavorite = (url) => {
-    const { favorites } = this.state;
-    let favCopy = favorites.slice();
-    if (favCopy.includes(url)) {
-      favCopy.splice(favCopy.indexOf(url), 1);
-    } else {
+    let favCopy = this.state.favorites.slice();
+    favCopy.includes(url) ?
+      favCopy.splice(favCopy.indexOf(url), 1)
+      :
       favCopy.push(url)
-    }
     this.setState({ favorites: favCopy })
   }
 

@@ -31,10 +31,8 @@ class CardArea extends Component {
     }
   }
 
-  setCard = (currentElement, type) => {
-    if (!type) type = this.props.currentFilter;
-
-    switch (type) {
+  setCard = (currentElement) => {
+    switch (currentElement.type) {
       case 'people': {
         const { name, population } = this.lookUp('planets', 'url', currentElement.homeworld)
         let speciesName;
@@ -74,22 +72,45 @@ class CardArea extends Component {
     this.setAllData();
   }
 
+  updateFavorites = (url) => {
+    this.props.toggleFavorite(url);
+    const key = url.split('/')[0]
+    const newState = this.state[key].slice()
+      .map(item => {
+        if (item.url.includes(url)) {
+          console.log(item.url,url)
+          item.isFavorite = !item.isFavorite
+        }
+        return item
+      })
+    this.setState({
+      [key]: newState
+    })
+  }
+
   getCard(currentElement) {
+    const regex = /\w+\/\d+\//
+    const id = regex.exec(currentElement.url)
     return (
       <Card
         key={currentElement.name}
         name={currentElement.name}
-        toggleFavorite={this.props.toggleFavorite}
-        id={currentElement.url}
+        toggleFavorite={this.updateFavorites}
+        id={id}
         result={this.setCard(currentElement)}
       />)
   }
 
-  getFavorites = () => {
+  flattenItems = () => {
     return ['people', 'vehicles', 'planets']
       .map((items) => [...this.state[items]])
       .flat()
+  }
+
+  getFavorites = (min, max) => {
+    return this.flattenItems()
       .filter(element => element.isFavorite)
+      .map((fav, i) => i >= min && i <= max && this.getCard(fav))
   }
 
   getCardsOfType = (filter, min, max) => {
@@ -102,13 +123,17 @@ class CardArea extends Component {
   render() {
     const { currentFilter, min, max, changeNumber } = this.props;
     const stateOrProp = currentFilter === 'favorites' ? 'props' : 'state';
+    const shouldShowFavs = currentFilter !== 'favorites'
     return (
       <section className='CardArea'>
         {this.props.currentFilter &&
           <Fragment>
             {min > 0 &&
               <button className='previous' onClick={() => changeNumber(-10)}>{'<'}</button>}
-            {this.getCardsOfType(currentFilter, min, max)}
+            {shouldShowFavs ?
+              this.getCardsOfType(currentFilter, min, max)
+              :
+              this.getFavorites(min, max)}
             {max < this[stateOrProp][currentFilter].length - 1 &&
               <button className='next' onClick={() => changeNumber(10)}>{'>'}</button>}
           </Fragment>
