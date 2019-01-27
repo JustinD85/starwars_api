@@ -15,7 +15,7 @@ describe('App', () => {
 
   
 
-  it('should fetch films from api', async () => {
+  it.skip('should fetch films from api', async () => {
     //mock fetch
     expect(wrapper.state('films').length).toEqual(0)
     await wrapper.instance().getFilms();

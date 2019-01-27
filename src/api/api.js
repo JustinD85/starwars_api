@@ -3,9 +3,8 @@ const getData = async (type, options = '') => {
   if (response.ok) {
     return response.json();
   } else {
-    throw new Error('Error fetchng Data');
+    throw new Error('Error fetching Data');
   }
 }
-
 
 export default { getData };
