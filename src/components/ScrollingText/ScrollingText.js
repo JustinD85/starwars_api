@@ -20,6 +20,9 @@ const ScrollingText = ({ film }) => {
 export default ScrollingText;
 
 ScrollingText.propTypes = {
-  film: PropTypes.object
-  //add prop key types
+  film: PropTypes.shape({
+    title: PropTypes.string,
+    opening_crawl: PropTypes.string,
+    release_date: PropTypes.string,
+  })
 }
