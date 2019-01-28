@@ -15,6 +15,7 @@ class App extends Component {
       max: 10,
       error: null
     }
+    this.audio = React.createRef()
   }
 
   setRandomFilm = async () => {
@@ -61,23 +62,27 @@ class App extends Component {
 
   render() {
     const { film, currentFilter, min, max, favorites } = this.state
-    
+
     return (
       <div className="App">
         <ScrollingText film={film} />
         <FilterSection
           setCurrentFilter={this.setCurrentFilter}
           favoriteCount={favorites.length}
+          audio={this.audio}
         />
         <CardArea
           currentFilter={currentFilter}
           getData={API.getData}
           min={min}
           max={max}
+          audio={this.audio}
           favorites={[...favorites]}
           changeNumber={this.changeNumber}
           toggleFavorite={this.toggleFavorite}
         />
+        <audio ref={this.audio}><source src="./beep4.mp3"></source></audio>
+        <img className="background" src="./sw_background.jpg" alt="shows deathstar in background" />
       </div>
     )
   }

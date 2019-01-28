@@ -53,7 +53,7 @@ class CardArea extends Component {
         const { terrain, population, climate } = currentElement;
         return [<div>Terrain: {terrain}</div>, <div>Pop: {population}</div>, <div>Climate: {climate}</div>]
       }
-      case 'vehicles': {
+      default: {
         const { model, vehicle_class, passengers } = currentElement;
         return [<div>Model: {model}</div>, <div>Class: {vehicle_class}</div>, <div>Fits: {passengers}</div>]
       }
@@ -89,6 +89,8 @@ class CardArea extends Component {
         name={currentElement.name}
         toggleFavorite={this.updateFavorites}
         id={id}
+        audio={this.props.audio}
+        isFav={currentElement.isFavorite}
         result={this.setCard(currentElement)}
       />)
   }

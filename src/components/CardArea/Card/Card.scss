@@ -1,0 +1,27 @@
+
+  .Card {
+    border: gold 1px solid;
+    position: relative;
+    margin: 1%;
+    min-height: 150px;
+    max-height: 200px;
+    padding-top: 2%;
+    text-align: center;
+    border-radius: 2px;
+    width: 30%;
+    display:grid;
+    background:rgba(0,0,0,.5);
+
+    .favorite-card{
+      position: absolute;
+      right:0;
+      height:20px;
+      width:20px;
+      border-radius: 20px;
+    }
+
+    &:hover{
+      background:gold;
+      color:black;
+    }
+  }

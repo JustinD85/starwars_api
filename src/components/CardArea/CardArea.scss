@@ -1,5 +1,4 @@
 .CardArea {
-  background: grey;
   display: flex;
   flex-wrap: wrap;
   height: 70%;
@@ -8,13 +7,5 @@
   padding: 2%;
   position: relative;
   width: 100%;
-
-
-  .Card {
-    border: gold 1px solid;
-    margin: 1%;
-    text-align: center;
-    width: 30%;
-  }
-
+  background-image: url("https://goo.gl/images/KkrFxx");
 }
