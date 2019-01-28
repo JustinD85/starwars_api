@@ -3,26 +3,21 @@ import PropTypes from 'prop-types'
 import './FilterSection.scss';
 
 const FilterSection = (props) => {
-  const { setCurrentFilter, favoriteCount, audio } = props
+  const { setCurrentFilter, favoriteCount, currentFilter } = props
   return (
     <section className="FilterSection">
-      <button
-        onClick={() => setCurrentFilter('people')}
-        onMouseEnter={() => audio.current.play()}
-        className="people">people</button>
-      <button
-        onClick={() => setCurrentFilter('vehicles')}
-        onMouseEnter={() => audio.current.play()}
-        className="vehicle"
-      >vehicles</button>
-      <button
-        onClick={() => setCurrentFilter('planets')}
-        onMouseEnter={() => audio.current.play()}
-        className="planet">planets</button>
-      <button
-        onClick={() => setCurrentFilter('favorites')}
-        onMouseEnter={() => audio.current.play()}
-        className="favorite">Favorites: {favoriteCount || 'none'}</button>
+      {['people', 'vehicles', 'planets'].map((item) => {
+        let isSelected = '';
+
+        if (currentFilter === item) isSelected = 'selected'
+        return <button key={item} onClick={() => setCurrentFilter(item)} className={item + ' ' + isSelected}>{item}</button>
+      })}
+
+      {['favorites'].map(() => {
+        let isSelected = 'favorites';
+        if (currentFilter === 'favorites') isSelected += ' selected'
+        return <button key='favorites' onClick={() => setCurrentFilter('favorites')} className={isSelected}>Favorites: {favoriteCount || 'none'}</button>
+      })}
     </section>
   )
 }

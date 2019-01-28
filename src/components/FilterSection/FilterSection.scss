@@ -2,9 +2,8 @@
   padding: 1%;
   height: 10%;
   width: 100%;
-  display: grid;
-  grid-template-areas:
-    " vehicle people planet favorite";
+  display: flex;
+  justify-content: space-around;
 
   button {
     width: 100px;
@@ -15,22 +14,20 @@
     background: #000;
     color: gold;
     text-transform: capitalize;
+
+    &:focus{
+      outline:none;
+    }
+    
+    &:hover {
+      background: red;
+    }
   }
 
-  .people {
-    grid-area: people;
-  }
-
-  .vehicle {
-    grid-area: vehicle;
-  }
-
-  .planet {
-    grid-area: planet;
-  }
-
-  .favorite {
-    grid-area: favorite;
+  .selected {
+    outline: none;
+    background: gold;
+    color: black;
   }
 
 }

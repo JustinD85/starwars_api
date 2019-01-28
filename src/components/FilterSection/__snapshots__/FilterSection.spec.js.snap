@@ -5,25 +5,29 @@ exports[`<FilterSection/> to Match snapshot 1`] = `
   className="FilterSection"
 >
   <button
-    className="people"
+    className="people "
+    key="people"
     onClick={[Function]}
   >
     people
   </button>
   <button
-    className="vehicle"
+    className="vehicles "
+    key="vehicles"
     onClick={[Function]}
   >
     vehicles
   </button>
   <button
-    className="planet"
+    className="planets "
+    key="planets"
     onClick={[Function]}
   >
     planets
   </button>
   <button
-    className="favorite"
+    className="favorites selected"
+    key="favorites"
     onClick={[Function]}
   >
     Favorites: 

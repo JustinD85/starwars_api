@@ -10,6 +10,7 @@ describe('<FilterSection/>', () => {
     wrapper = shallow(<FilterSection
       setCurrentFilter={mockSetCurrentFilter}
       favoriteCount={mockFavCount}
+      currentFilter={'favorites'}
     />)
   })
 
@@ -20,9 +21,9 @@ describe('<FilterSection/>', () => {
   it('should call setCurrent filter when clicked', () => {
     //execution
     wrapper.find('.people').simulate('click')
-    wrapper.find('.vehicle').simulate('click')
-    wrapper.find('.planet').simulate('click')
-    wrapper.find('.favorite').simulate('click')
+    wrapper.find('.vehicles').simulate('click')
+    wrapper.find('.planets').simulate('click')
+    wrapper.find('.favorites').simulate('click')
 
     //expectation
     expect(mockSetCurrentFilter).toHaveBeenCalledTimes(4)
@@ -35,16 +36,17 @@ describe('<FilterSection/>', () => {
     wrapper = shallow(<FilterSection
       setCurrentFilter={mockSetCurrentFilter}
       favoriteCount={mockFavCount}
+      currentFilter={'vehicles'}
     />)
 
     //expectation
-    expect(wrapper.find('.favorite').text()).toEqual(expected)
+    expect(wrapper.find('.favorites').text()).toEqual(expected)
   })
 
   it('should show a message if no favorites', () => {
     //setup
     expected = "Favorites: none"
     //expectation
-    expect(wrapper.find('.favorite').text()).toEqual(expected)
+    expect(wrapper.find('.favorites').text()).toEqual(expected)
   })
 })

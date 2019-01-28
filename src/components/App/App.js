@@ -12,7 +12,7 @@ class App extends Component {
       favorites: [],
       currentFilter: null,
       min: 0,
-      max: 10,
+      max: 0,
       error: null
     }
     this.audio = React.createRef()
@@ -38,6 +38,7 @@ class App extends Component {
       favCopy.splice(favCopy.indexOf(url), 1)
       :
       favCopy.push(url)
+    localStorage.setItem('favorites', JSON.stringify(favCopy))
     this.setState({ favorites: favCopy })
   }
 
@@ -45,7 +46,7 @@ class App extends Component {
     this.setState({
       currentFilter: type,
       min: 0,
-      max: 10
+      max: 8
     })
   }
 
@@ -57,6 +58,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.setState({ favorites: JSON.parse(localStorage.getItem('favorites')) || [] })
     this.setRandomFilm()
   }
 
@@ -69,7 +71,7 @@ class App extends Component {
         <FilterSection
           setCurrentFilter={this.setCurrentFilter}
           favoriteCount={favorites.length}
-          audio={this.audio}
+          currentFilter={currentFilter}
         />
         <CardArea
           currentFilter={currentFilter}

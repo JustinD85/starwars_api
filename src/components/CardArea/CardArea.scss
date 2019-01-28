@@ -3,9 +3,38 @@
   flex-wrap: wrap;
   height: 70%;
   justify-content: center;
-  overflow: scroll;
-  padding: 2%;
+  overflow-y: scroll;
+  padding-top: 5%;
   position: relative;
   width: 100%;
   background-image: url("https://goo.gl/images/KkrFxx");
+
+  .next,
+  .previous {
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height:30px;
+    border-radius: 20px;
+    background:rgba(0,0,0,.5);
+    border:red 1px solid;
+    color:gold;
+    &:focus{
+      outline:none;
+    }
+    &:hover{
+      background:red;
+    }
+  }
+
+  .previous {
+    left: 10px;
+  }
+  .next {
+    right: 10px;
+  }
+
+
+
+
 }

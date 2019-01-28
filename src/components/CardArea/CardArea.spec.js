@@ -113,7 +113,8 @@ describe('<CardArea/>', () => {
 
       wrapper = shallow(<CardArea
         getData={getData}
-        favorites={[]}
+        currentFilter={'favorites'}
+        favorites={["https://swapi.co/api/vehicles/2/"]}
       />)
     })
 

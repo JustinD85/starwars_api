@@ -42,7 +42,7 @@ export const vehicle1 = {
       ],
       "created": "2014-12-10T16:01:52.434000Z",
       "edited": "2014-12-22T18:21:15.552614Z",
-      "url": "https://swapi.co/api/vehicles/2/"
+      "url": "https://swapi.co/api/vehicles/1/"
     }
   ]
 }

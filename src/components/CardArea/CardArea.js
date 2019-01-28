@@ -25,7 +25,7 @@ class CardArea extends Component {
     const newData = await getData(`${type}${options}`);
     const prevState = this.state[type];
     const newState = newData.results.map(item => {
-      item.isFavorite = favorites.includes(item.url) ? true : false;
+      item.isFavorite = favorites.find(i => item.url.includes(i)) ? true : false;
       item.type = type
       return item
     });
@@ -109,7 +109,8 @@ class CardArea extends Component {
     })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.state.isLoaded
     this.setAllData();
   }
 
@@ -123,7 +124,7 @@ class CardArea extends Component {
         {currentFilter &&
           <Fragment>
             {min > 0 &&
-              <button className='previous' onClick={() => changeNumber(-10)}>{'<'}</button>}
+              <button className='previous' onClick={() => changeNumber(-9)}>{'<'}</button>}
 
             {shouldShowFavs ?
               this.getCardsOfType(currentFilter, min, max)
@@ -131,7 +132,7 @@ class CardArea extends Component {
               this.getFavorites(min, max)}
 
             {max < this[stateOrProp][currentFilter].length - 1 &&
-              <button className='next' onClick={() => changeNumber(10)}>{'>'}</button>}
+              <button className='next' onClick={() => changeNumber(9)}>{'>'}</button>}
           </Fragment>
         }
         {!currentFilter && isLoaded && <div>Pick something young Jedi</div>}
@@ -143,7 +144,7 @@ class CardArea extends Component {
 export default CardArea;
 
 CardArea.propTypes = {
-  currentFilter: PropTypes.oneOf(['planet', 'people', 'vehicles']),
+  currentFilter: PropTypes.oneOf(['planets', 'people', 'vehicles', 'favorites']),
   getData: PropTypes.func,
   min: PropTypes.number,
   max: PropTypes.number,

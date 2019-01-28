@@ -8,10 +8,16 @@ exports[`App <App/> should render without error 1`] = `
     film={Object {}}
   />
   <FilterSection
+    currentFilter={null}
     favoriteCount={0}
     setCurrentFilter={[Function]}
   />
   <CardArea
+    audio={
+      Object {
+        "current": null,
+      }
+    }
     changeNumber={[Function]}
     currentFilter={null}
     favorites={Array []}
@@ -19,6 +25,16 @@ exports[`App <App/> should render without error 1`] = `
     max={10}
     min={0}
     toggleFavorite={[Function]}
+  />
+  <audio>
+    <source
+      src="./beep4.mp3"
+    />
+  </audio>
+  <img
+    alt="shows deathstar in background"
+    className="background"
+    src="./sw_background.jpg"
   />
 </div>
 `;
