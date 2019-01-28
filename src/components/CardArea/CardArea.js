@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import './CardArea.scss';
 import Card from './Card/Card'
+import PropTypes from 'prop-types'
 class CardArea extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,12 @@ class CardArea extends Component {
     }
   }
 
+  setAllData = () => {
+    let areResolved = ['planets', 'species', 'vehicles', 'people']
+      .map(noun => this.setAllOfType(noun))
+    Promise.all(areResolved).then(() => this.setState({ isLoaded: true }))
+  }
+
   setAllOfType = async (type, options = '') => {
     const { getData, favorites } = this.props;
     const newData = await getData(`${type}${options}`);
@@ -22,7 +29,6 @@ class CardArea extends Component {
       item.type = type
       return item
     });
-
     await this.setState({ [type]: [...prevState, ...newState] })
     if (newData.next) {
       const index = newData.next.search(/\?/)
@@ -51,25 +57,12 @@ class CardArea extends Component {
         const { model, vehicle_class, passengers } = currentElement;
         return [<div>Model: {model}</div>, <div>Class: {vehicle_class}</div>, <div>Fits: {passengers}</div>]
       }
-      case 'favorites': {
-        return 'this.setCard(currentElement, currentElement.type)'
-      }
-      default: throw new Error('Unknown type selected')
     }
+
   }
 
   lookUp = (noun, aProperty, predicate) => {
     return this.state[noun].find((element) => element[aProperty] === predicate)
-  }
-
-  setAllData = () => {
-    let areResolved = ['planets', 'species', 'vehicles', 'people']
-      .map(noun => this.setAllOfType(noun))
-    Promise.all(areResolved).then(() => this.setState({ isLoaded: true }))
-  }
-
-  async componentDidMount() {
-    this.setAllData();
   }
 
   updateFavorites = (url) => {
@@ -78,7 +71,6 @@ class CardArea extends Component {
     const newState = this.state[key].slice()
       .map(item => {
         if (item.url.includes(url)) {
-          console.log(item.url,url)
           item.isFavorite = !item.isFavorite
         }
         return item
@@ -101,14 +93,10 @@ class CardArea extends Component {
       />)
   }
 
-  flattenItems = () => {
+  getFavorites = (min, max) => {
     return ['people', 'vehicles', 'planets']
       .map((items) => [...this.state[items]])
       .flat()
-  }
-
-  getFavorites = (min, max) => {
-    return this.flattenItems()
       .filter(element => element.isFavorite)
       .map((fav, i) => i >= min && i <= max && this.getCard(fav))
   }
@@ -119,29 +107,45 @@ class CardArea extends Component {
     })
   }
 
+  componentDidMount() {
+    this.setAllData();
+  }
 
   render() {
     const { currentFilter, min, max, changeNumber } = this.props;
+    const { isLoaded } = this.state
     const stateOrProp = currentFilter === 'favorites' ? 'props' : 'state';
     const shouldShowFavs = currentFilter !== 'favorites'
     return (
       <section className='CardArea'>
-        {this.props.currentFilter &&
+        {currentFilter &&
           <Fragment>
             {min > 0 &&
               <button className='previous' onClick={() => changeNumber(-10)}>{'<'}</button>}
+
             {shouldShowFavs ?
               this.getCardsOfType(currentFilter, min, max)
               :
               this.getFavorites(min, max)}
+
             {max < this[stateOrProp][currentFilter].length - 1 &&
               <button className='next' onClick={() => changeNumber(10)}>{'>'}</button>}
           </Fragment>
         }
-        {!this.props.currentFilter && this.state.isLoaded && <div>Pick something young Jedi</div>}
-        {!this.state.isLoaded && <div>Loading!</div>}
+        {!currentFilter && isLoaded && <div>Pick something young Jedi</div>}
+        {!isLoaded && <div>Loading!</div>}
       </section>)
   }
 }
 
 export default CardArea;
+
+CardArea.propTypes = {
+  currentFilter: PropTypes.oneOf(['planet', 'people', 'vehicles']),
+  getData: PropTypes.func,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  favorites: PropTypes.array,
+  changeNumber: PropTypes.func,
+  toggleFavorite: PropTypes.func
+}
